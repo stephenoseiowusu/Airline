@@ -20,10 +20,13 @@ public class AirlineService {
          airLineUser1.setLast_name(airLineUser.getLastName());
          airLineUser1.setPassword(airLineUser.getPassword());
          session.save(airLineUser1);
+         tx.commit();
      }catch(Exception e){
         System.out.println(e.getMessage());
+        tx.rollback();
      }finally{
          session.close();
+
      }
  }
 }
