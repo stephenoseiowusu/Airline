@@ -17,8 +17,13 @@ public class AirlineService {
          tx = session.beginTransaction();
          DAO.models.AirLineUser airLineUser1 = new DAO.models.AirLineUser();
          airLineUser1.setFirst_name(airLineUser.getFirstName());
+         airLineUser1.setLast_name(airLineUser.getLastName());
+         airLineUser1.setPassword(airLineUser.getPassword());
+         session.save(airLineUser1);
      }catch(Exception e){
-
+        System.out.println(e.getMessage());
+     }finally{
+         session.close();
      }
  }
 }

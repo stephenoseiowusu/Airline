@@ -10,10 +10,10 @@ public class AirLineUser {
     public void setFirst_name(String first_name){
         this.first_name = first_name;
     }
-    private void setLast_name(String last_name){
+    public  void setLast_name(String last_name){
         this.last_name = last_name;
     }
-    private void setPassword(String password){
+    public void setPassword(String password){
         this.password = password;
     }
 
