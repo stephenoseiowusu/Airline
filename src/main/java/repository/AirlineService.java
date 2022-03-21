@@ -13,9 +13,12 @@ public class AirlineService {
      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
      Session session = airlineHibernateDatabase.getSession();
      Transaction tx = null;
-     //try{
-      //   tx = session.beginTransaction();
+     try{
+         tx = session.beginTransaction();
+         DAO.models.AirLineUser airLineUser1 = new DAO.models.AirLineUser();
+         airLineUser1.setFirst_name(airLineUser.getFirstName());
+     }catch(Exception e){
 
-    // }
+     }
  }
 }

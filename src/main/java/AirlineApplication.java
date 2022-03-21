@@ -13,6 +13,7 @@ public class AirlineApplication   {
         SpringApplication.run(AirlineApplication.class);
        AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
        airlineHibernateDatabase.getSession();
+       //airlineHibernateDatabase.
     }
 
 }
