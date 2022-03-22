@@ -7,6 +7,7 @@ import DTO.models.Credentials;
 import airlineHibernate.AirlineHibernateDatabase;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -65,16 +66,50 @@ public class AirlineService {
  public Boolean checkAdminCredentials(Credentials credentials){
      AirlineHibernateDatabase airlineHibernateDatabase = new AirlineHibernateDatabase();
      Session session = null;
+     Query hb_query;
      Boolean result = false;
      try{
          session = airlineHibernateDatabase.getSession();
-         Transaction tx = session.beginTransaction();
+         //Transaction tx = session.beginTransaction();
+         String query = "FROM admin a where a.login_id = :login_id and a.password = :password";
+         hb_query = session.createQuery(query);
+         hb_query.setParameter("login_id",credentials.getUsername());
+         hb_query.setParameter("password",credentials.getPassword());
+         int found = hb_query.list().size();
+         if(found > 0){
+             result = true;
+         }
      }catch(Exception e){
          System.out.println(e.getMessage());
      }finally {
          if(session!= null) {
              session.close();
+
          }
+     }
+     return result;
+ }
+ public Boolean checkFlightUserCredentials(Credentials credentials){
+     AirlineHibernateDatabase airlineHibernateDatabase = new AirlineHibernateDatabase();
+     Session session = null;
+     Boolean result = false;
+     Query hb_query;
+     try{
+         session = airlineHibernateDatabase.getSession();
+         hb_query = session.createQuery("from user u where u.login_id = :loginId and u.password = :password");
+         hb_query.setParameter("login_id",credentials.getUsername());
+         hb_query.setParameter("password",credentials.getPassword());
+         int found = hb_query.list().size();
+         if(found > 0){
+             result = true;
+         }
+
+     }catch(Exception e){
+        result = null;
+     }finally{
+        if(session != null) {
+            session.close();
+        }
      }
      return result;
  }
