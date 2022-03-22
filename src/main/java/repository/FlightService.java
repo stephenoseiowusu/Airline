@@ -4,6 +4,7 @@ import DTO.models.Flight;
 import airlineHibernate.AirlineHibernateDatabase;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -40,13 +41,88 @@ public class FlightService {
       }
       return result;
    }
-   public Boolean deleteFlightFromDatabase(){
-      return null;
+   public Boolean deleteFlightFromDatabase(Flight flight){
+      Boolean result = null;
+      Session session = null;
+      Transaction transaction = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      DAO.models.Flight inFlight = new DAO.models.Flight();
+      inFlight.setFlight_number(UUID.randomUUID().toString());
+      inFlight.setDepart_time(flight.getDepart_time());
+      inFlight.setLand_time(flight.getLand_time());
+      inFlight.setNumber_of_seats(flight.getNumber_of_seats());
+      inFlight.setOrigin(flight.getOrigin());
+      inFlight.setDestination(flight.getDestination());
+      try {
+
+         session = airlineHibernateDatabase.getSession();
+         transaction = session.beginTransaction();
+         transaction.begin();
+         session.delete(inFlight);
+         transaction.commit();
+      }catch(Exception e){
+         result = false;
+
+      }finally{
+         if(session != null){
+            session.close();
+         }
+      }
+      return result;
    }
-   public Boolean bookFlightForUser(){
-     return null;
+   public Boolean bookFlightForUser(int userID, int flightID){
+      Boolean result = null;
+      Session session = null;
+      Transaction transaction = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      DAO.models.Flight inFlight = new DAO.models.Flight();
+      inFlight.setFlight_number(UUID.randomUUID().toString());
+      inFlight.setDepart_time(flight.getDepart_time());
+      inFlight.setLand_time(flight.getLand_time());
+      inFlight.setNumber_of_seats(flight.getNumber_of_seats());
+      inFlight.setOrigin(flight.getOrigin());
+      inFlight.setDestination(flight.getDestination());
+      try {
+
+         session = airlineHibernateDatabase.getSession();
+         transaction = session.beginTransaction();
+         transaction.begin();
+         session.delete(inFlight);
+         transaction.commit();
+      }catch(Exception e){
+         result = false;
+
+      }finally{
+         if(session != null){
+            session.close();
+         }
+      }
+      return result;
    }
-   public Boolean dropFligtForUser(){
-      return null;
+   public Boolean dropFligtForUser( int userID, int flightID){
+      Boolean result = null;
+      Session session = null;
+      Transaction transaction = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+
+      try {
+
+         session = airlineHibernateDatabase.getSession();
+         transaction = session.beginTransaction();
+         transaction.begin();
+         Query query = session.createQuery("delete from user_flights where userid = :idOfUser and flightId = :idOfFlight");
+         query.setParameter("idOfFlight",flightID);
+         query.setParameter("idOfUser",userID);
+         query.executeUpdate();
+         transaction.commit();
+      }catch(Exception e){
+         result = false;
+
+      }finally{
+         if(session != null){
+            session.close();
+         }
+      }
+      return result;
    }
 }
