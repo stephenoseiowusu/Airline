@@ -1,6 +1,12 @@
 package DAO.models;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Data
+@Getter
+@Setter
 public class AirlineUser {
     private int id;
     private String first_name;
@@ -13,7 +19,7 @@ public class AirlineUser {
         this.password = password;
         this.login_id = login_id;
     }
-    public void setFirst_name(String first_name){
+   /* public void setFirst_name(String first_name){
         this.first_name = first_name;
     }
     public  void setLast_name(String last_name){
@@ -30,4 +36,12 @@ public class AirlineUser {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getLogin_id() {
+        return login_id;
+    }
+
+    public void setLogin_id(String login_id) {
+        this.login_id = login_id;
+    }*/
 }

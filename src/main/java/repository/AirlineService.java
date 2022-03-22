@@ -44,7 +44,12 @@ public class AirlineService {
      try{
        session = airlineHibernateDatabase.getSession();
        Transaction tx = session.beginTransaction();
-
+       DAO.models.AirlineAdmin airlineAdmin = new DAO.models.AirlineAdmin(airLineAdmin.getLogin_id(),airLineAdmin.getPassword()
+                 ,airLineAdmin.getFirst_name(),airLineAdmin.getLast_name());
+       //airLineUser1.setFirst_name(airLineUser.getFirstName());
+      // airLineUser1.setLast_name(airLineUser.getLastName());
+       //airLineUser1.setPassword(airLineUser.getPassword());
+       session.save(airlineAdmin);
        tx.commit();
        result = true;
 

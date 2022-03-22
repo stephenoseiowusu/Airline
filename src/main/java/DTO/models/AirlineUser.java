@@ -8,7 +8,7 @@ public class AirlineUser {
     private String firstName;
     private String password;
     private String lastName;
-    public AirlineUser(String username, String firstName,  String lastName,String password){
+    public AirlineUser(String username, String firstName,  String lastName, String password){
         this.username = username;
         this.firstName = firstName;
         this.password = password;

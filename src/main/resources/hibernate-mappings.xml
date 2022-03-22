@@ -2,25 +2,30 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-
 <hibernate-mapping>
-    <class name = "DAO.models.AirlineUser" table = "User">
+    <class name = "DAO.models.AirlineAdmin" table = "admin" >
+        <meta attribute="class-description">
+            This class contains the airline administrator.
+        </meta>
+        <id name = "id" type = "int" column = "id">
+            <generator class="native"/>
+        </id>
+        <property name = "login_id" type = "string" column="login_id"/>
+        <property name = "password" type = "string" column="password"/>
+        <property name="first_name" type="string" column="first_name"/>
+        <property name="last_name" type="string" column="last_name"/>
+    </class>
+    <class name = "DAO.models.AirlineUser" table = "user">
         <meta attribute = "class-description">
             This class contains the airline user.
         </meta>
         <id name = "id" type = "int" column = "id">
             <generator class="native"/>
         </id>
-        <property name = "firstName" column = "first_name" type = "string"/>
-        <property name = "lastName" column = "last_name" type = "string"/>
+        <property name = "first_name" column = "first_name" type = "string"/>
+        <property name = "last_name" column = "last_name" type = "string"/>
         <property name = "password" column = "password" type = "string"/>
+        <property name="login_id" column="login_id" type="string"/>
     </class>
-    <class name = "DAO.models.AirlineAdmin" table = "Admin" >
-        <meta attribute="class-description">
-            This class contains the airline administrator.
-        </meta>
 
-        <property name = "login_id" type = "string" column="login_id"/>
-        <property name = "password" type = "string" column="password"/>
-    </class>
 </hibernate-mapping>
