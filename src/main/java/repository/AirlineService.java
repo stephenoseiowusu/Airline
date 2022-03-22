@@ -71,7 +71,7 @@ public class AirlineService {
      try{
          session = airlineHibernateDatabase.getSession();
          //Transaction tx = session.beginTransaction();
-         String query = "FROM admin a where a.login_id = :login_id and a.password = :password";
+         String query = "FROM AirlineAdmin a where a.login_id = :login_id and a.password = :password";
          hb_query = session.createQuery(query);
          hb_query.setParameter("login_id",credentials.getUsername());
          hb_query.setParameter("password",credentials.getPassword());
@@ -96,8 +96,8 @@ public class AirlineService {
      Query hb_query;
      try{
          session = airlineHibernateDatabase.getSession();
-         hb_query = session.createQuery("from user u where u.login_id = :loginId and u.password = :password");
-         hb_query.setParameter("login_id",credentials.getUsername());
+         hb_query = session.createQuery("from AirlineUser u where u.login_id = :loginId and u.password = :password");
+         hb_query.setParameter("loginId",credentials.getUsername());
          hb_query.setParameter("password",credentials.getPassword());
          int found = hb_query.list().size();
          if(found > 0){

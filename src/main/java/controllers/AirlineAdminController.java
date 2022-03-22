@@ -34,7 +34,7 @@ public class AirlineAdminController {
         if(result == true){
             responseEntity = ResponseEntity.status(HttpStatus.OK).build();
         }else if(result == false){
-            responseEntity = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            responseEntity = ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }else {
             responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
