@@ -25,6 +25,7 @@ public class AirlineService {
          airLineUser1.setFirst_name(airLineUser.getFirstName());
          airLineUser1.setLast_name(airLineUser.getLastName());
          airLineUser1.setPassword(airLineUser.getPassword());
+         airLineUser1.setLogin_id(airLineUser.getUserName());
          session.save(airLineUser1);
          tx.commit();
          result = true;
