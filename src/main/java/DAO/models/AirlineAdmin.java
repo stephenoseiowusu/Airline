@@ -3,7 +3,7 @@ package DAO.models;
 import org.hibernate.annotations.Table;
 
 public class AirlineAdmin {
-    private int id;
+
     private String login_id;
     private String password;
     private String first_name;
@@ -47,11 +47,5 @@ public class AirlineAdmin {
         this.last_name = last_name;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }
