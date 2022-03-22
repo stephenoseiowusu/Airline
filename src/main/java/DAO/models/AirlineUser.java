@@ -2,7 +2,7 @@ package DAO.models;
 
 
 public class AirlineUser {
-
+    private int id;
     private String first_name;
     private String last_name;
     private String password;
@@ -23,4 +23,11 @@ public class AirlineUser {
         this.password = password;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

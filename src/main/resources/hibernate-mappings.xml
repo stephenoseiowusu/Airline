@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name = "DAO.models.AirlineUser" table = "user">
+    <!--<class name = "DAO.models.AirlineUser" table = "user">
         <meta attribute = "class-description">
             This class contains the airline user.
         </meta>
@@ -14,11 +14,14 @@
         <property name = "firstName" column = "first_name" type = "string"/>
         <property name = "lastName" column = "last_name" type = "string"/>
         <property name = "password" column = "password" type = "string"/>
-    </class>
-    <class name = "DAO.models.AirlineAdmin" table = "admin">
+    </class> -->
+    <class name = "DAO.models.AirlineAdmin" table = "admin" schema="airline">
         <meta attribute="class-description">
             This class contains the airline administrator.
         </meta>
+        <id name ="id" type = "int" column= "id">
+            <generator class="native"/>
+        </id>
         <property name = "login_id" type = "string"/>
         <property name = "password" type = "string"/>
     </class>
