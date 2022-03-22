@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -121,5 +123,39 @@ public class FlightService {
          }
       }
       return result;
+   }
+   public ArrayList<Flight> getAllFlightsFromDatabase(){
+      ArrayList<Flight> listOfFlights = new ArrayList<>();
+
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      try {
+         session = airlineHibernateDatabase.getSession();
+
+         Query query = session.createQuery("From Flights");
+
+         List<DAO.models.Flight> temp= (List<DAO.models.Flight>)query.list();
+         for( DAO.models.Flight flight: temp){
+            Flight temp_flight = new Flight();
+            temp_flight.setFlight_id(flight.getFlight_id());
+            temp_flight.setFlight_number(flight.getFlight_number());
+            temp_flight.setDestination(flight.getDestination());
+            temp_flight.setNumber_of_seats(flight.getNumber_of_seats());
+            temp_flight.setDepart_time(flight.getDepart_time());
+            temp_flight.setLand_time(flight.getLand_time());
+            temp_flight.setOrigin(flight.getOrigin());
+            listOfFlights.add(new Flight());
+         }
+
+      }catch(Exception e){
+         System.out.println(e.getMessage());
+         listOfFlights = null;
+
+      }finally{
+         if(session != null){
+            session.close();
+         }
+      }
+      return listOfFlights;
    }
 }
