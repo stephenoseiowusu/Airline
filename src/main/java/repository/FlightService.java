@@ -62,6 +62,7 @@ public class FlightService {
          session.delete(inFlight);
          transaction.commit();
       }catch(Exception e){
+         System.out.println(e.getMessage());
          result = false;
 
       }finally{
@@ -86,6 +87,7 @@ public class FlightService {
          session.delete(inFlight);
          transaction.commit();
       }catch(Exception e){
+         System.out.println(e.getMessage());
          result = false;
 
       }finally{
@@ -100,9 +102,7 @@ public class FlightService {
       Session session = null;
       Transaction transaction = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
-
       try {
-
          session = airlineHibernateDatabase.getSession();
          transaction = session.beginTransaction();
          transaction.begin();
@@ -112,6 +112,7 @@ public class FlightService {
          query.executeUpdate();
          transaction.commit();
       }catch(Exception e){
+         System.out.println(e.getMessage());
          result = false;
 
       }finally{

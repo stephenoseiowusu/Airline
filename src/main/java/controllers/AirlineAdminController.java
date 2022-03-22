@@ -3,6 +3,7 @@ package controllers;
 
 import DTO.models.AirlineAdmin;
 import DTO.models.Credentials;
+import DTO.models.Flight;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import repository.AirlineService;
+import repository.FlightService;
 
 @RestController
 @RequestMapping("/airlineAdminController")
@@ -40,5 +42,18 @@ public class AirlineAdminController {
         }
         return responseEntity;
     }
+    @PostMapping("/createFlight")
+    public ResponseEntity<?> createFlightInDatabase(@RequestBody Flight flight){
+        ResponseEntity<?> responseEntity;
+        FlightService flightService = new FlightService();
+        Boolean result = flightService.addFlightToDatabase(flight);
+        if(result == true){
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).build();
+        }else { // if (result == false){
+            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return responseEntity;
+    }
+    //@DeleteMapping
 
 }
