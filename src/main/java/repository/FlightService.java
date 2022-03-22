@@ -144,7 +144,7 @@ public class FlightService {
             temp_flight.setDepart_time(flight.getDepart_time());
             temp_flight.setLand_time(flight.getLand_time());
             temp_flight.setOrigin(flight.getOrigin());
-            listOfFlights.add(new Flight());
+            listOfFlights.add(temp_flight);
          }
 
       }catch(Exception e){
