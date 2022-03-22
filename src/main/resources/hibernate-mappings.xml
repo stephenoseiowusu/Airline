@@ -27,5 +27,19 @@
         <property name = "password" column = "password" type = "string"/>
         <property name="login_id" column="login_id" type="string"/>
     </class>
+    <class name = "DAO.models.Flight" table = "Flights">
+        <meta attribute = "class-description">
+            This class contains the flights
+        </meta>
+        <id name = "flight_id" type = "int" column = "flight_id">
+            <generator class = "native"/>
+        </id>
+        <property name = "origin" column="origin" type = "string"></property>
+        <property name = "destination" column = "destination" type = "string"></property>  
+        <property name = "flight_number" column = "flight_number" type = "string"></property>
+        <property name = "depart_time" column="depart_time" type = "date"></property>
+        <property name="land_time" column = "land_time" type = "date"></property>
+        <property name = "number_of_seats" column = "number_of_seats" type = "int"></property>
+    </class>
 
 </hibernate-mapping>
