@@ -19,7 +19,8 @@ public class AirlineService {
      boolean result = false;
      try{
          tx = session.beginTransaction();
-         DAO.models.AirLineUser airLineUser1 = new DAO.models.AirLineUser();
+         DAO.models.AirlineUser airLineUser1 = new DAO.models.AirlineUser(airLineUser.getUserName(),airLineUser.getFirstName()
+                                                                        ,airLineUser.getLastName(),airLineUser.getPassword());
          airLineUser1.setFirst_name(airLineUser.getFirstName());
          airLineUser1.setLast_name(airLineUser.getLastName());
          airLineUser1.setPassword(airLineUser.getPassword());

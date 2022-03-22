@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name = "AirLineUser" table = "user">
+    <class name = "DAO.models.AirlineUser" table = "user">
         <meta attribute = "class-description">
             This class contains the airline user.
         </meta>
@@ -15,10 +15,11 @@
         <property name = "lastName" column = "last_name" type = "string"/>
         <property name = "password" column = "password" type = "string"/>
     </class>
-    <class name = "AirLineAdmin" table = "admin">
+    <class name = "DAO.models.AirlineAdmin" table = "admin">
         <meta attribute="class-description">
             This class contains the airline administrator.
         </meta>
-        <id name = "id" type = "int"
+        <property name = "login_id" type = "string"/>
+        <property name = "password" type = "string"/>
     </class>
 </hibernate-mapping>
