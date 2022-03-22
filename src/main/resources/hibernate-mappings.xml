@@ -5,18 +5,20 @@
 
 <hibernate-mapping>
     <class name = "AirLineUser" table = "user">
-
         <meta attribute = "class-description">
             This class contains the airline user.
         </meta>
-
         <id name = "id" type = "int" column = "id">
             <generator class="native"/>
         </id>
-
         <property name = "firstName" column = "first_name" type = "string"/>
         <property name = "lastName" column = "last_name" type = "string"/>
         <property name = "password" column = "password" type = "string"/>
-
+    </class>
+    <class name = "AirLineAdmin" table = "admin">
+        <meta attribute="class-description">
+            This class contains the airline administrator.
+        </meta>
+        <id name = "id" type = "int"
     </class>
 </hibernate-mapping>
