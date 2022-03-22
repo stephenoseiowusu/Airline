@@ -27,8 +27,8 @@ public class AirlineController {
        }
        return responseEntity;
    }
-   @RequestMapping(method = RequestMethod.GET, value = "/loginAirLineUser")
-    public ResponseEntity<?> loginAirLineUser(@RequestBody Credentials credentials){
+   @RequestMapping(method = RequestMethod.POST, value = "/loginAirlineUser")
+    public ResponseEntity<?> loginAirlineUser(@RequestBody Credentials credentials){
        ResponseEntity<?> responseEntity;
        AirlineService airlineService = new AirlineService();
        Boolean result = airlineService.checkFlightUserCredentials(credentials);

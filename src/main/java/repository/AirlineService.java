@@ -64,7 +64,7 @@ public class AirlineService {
      return result;
  }
  public Boolean checkAdminCredentials(Credentials credentials){
-     AirlineHibernateDatabase airlineHibernateDatabase = new AirlineHibernateDatabase();
+     AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
      Session session = null;
      Query hb_query;
      Boolean result = false;
@@ -90,7 +90,7 @@ public class AirlineService {
      return result;
  }
  public Boolean checkFlightUserCredentials(Credentials credentials){
-     AirlineHibernateDatabase airlineHibernateDatabase = new AirlineHibernateDatabase();
+     AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
      Session session = null;
      Boolean result = false;
      Query hb_query;
