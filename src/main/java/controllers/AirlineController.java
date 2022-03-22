@@ -14,7 +14,7 @@ import repository.AirlineService;
 @RequestMapping("/airlineController")
 public class AirlineController {
 
-   @RequestMapping(method = RequestMethod.POST, value = "/createAirLineUserAccount")
+   @RequestMapping(method = RequestMethod.POST, value = "/createAirlineUserAccount")
     public ResponseEntity<?> createAirLineUserAccount(@RequestBody AirlineUser airlineUser){
        ResponseEntity<?> responseEntity;
        AirlineService airlineService = new AirlineService();
