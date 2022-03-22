@@ -3,12 +3,12 @@ package DTO.models;
 import lombok.Data;
 
 @Data
-public class AirLineUser {
+public class AirlineUser {
     private String username;
     private String firstName;
     private String password;
     private String lastName;
-    public AirLineUser(String username, String firstName,  String lastName,String password){
+    public AirlineUser(String username, String firstName,  String lastName,String password){
         this.username = username;
         this.firstName = firstName;
         this.password = password;

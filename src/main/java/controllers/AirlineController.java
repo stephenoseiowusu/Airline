@@ -1,6 +1,6 @@
 package controllers;
 
-import DTO.models.AirLineUser;
+import DTO.models.AirlineUser;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import repository.AirlineService;
 
 @RestController
-@RequestMapping("/airLineController")
+@RequestMapping("/airlineController")
 public class AirlineController {
 
    @RequestMapping(method = RequestMethod.POST, value = "/createAirLineUserAccount")
-    public ResponseEntity<?> createAirLineUserAccount(@RequestBody AirLineUser airLineUser){
+    public ResponseEntity<?> createAirLineUserAccount(@RequestBody AirlineUser airlineUser){
        ResponseEntity<?> responseEntity;
        AirlineService airlineService = new AirlineService();
-       boolean result = airlineService.addUser(airLineUser);
+       boolean result = airlineService.addUser(airlineUser);
        if(result == true){
            responseEntity = ResponseEntity.status(HttpStatus.OK).build();
        }else{
