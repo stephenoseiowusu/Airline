@@ -1,6 +1,7 @@
 package repository;
 
 import DTO.models.Flight;
+import DTO.models.UserFlights;
 import airlineHibernate.AirlineHibernateDatabase;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -70,20 +71,15 @@ public class FlightService {
       }
       return result;
    }
-   public Boolean bookFlightForUser(int userID, int flightID){
+   public Boolean bookFlightForUser(UserFlights userFlights){
       Boolean result = null;
       Session session = null;
       Transaction transaction = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
-      DAO.models.Flight inFlight = new DAO.models.Flight();
-      inFlight.setFlight_number(UUID.randomUUID().toString());
-      inFlight.setDepart_time(flight.getDepart_time());
-      inFlight.setLand_time(flight.getLand_time());
-      inFlight.setNumber_of_seats(flight.getNumber_of_seats());
-      inFlight.setOrigin(flight.getOrigin());
-      inFlight.setDestination(flight.getDestination());
+      DAO.models.UserFlights inFlight = new DAO.models.UserFlights();
+      inFlight.setFlightid(userFlights.getFlightId());
+      inFlight.setUserid(userFlights.getFlightId());
       try {
-
          session = airlineHibernateDatabase.getSession();
          transaction = session.beginTransaction();
          transaction.begin();
