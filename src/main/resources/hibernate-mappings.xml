@@ -41,5 +41,15 @@
         <property name="land_time" column = "land_time" type = "date"></property>
         <property name = "number_of_seats" column = "number_of_seats" type = "int"></property>
     </class>
+    <class name = "DAO.models.UserFlights" table = "user_flights">
+        <meta attribute = "class-description">
+            This class contains the flights associated with a user
+        </meta>
+        <id name = "userFlightsId" type = "int" column="user_flights_id">
+            <generator class="native"></generator>
+        </id>
+        <property name = "userId" column="userid" type = "int"></property>
+        <property name = "flightId" column="flightid" type="int"></property>
+    </class>
 
 </hibernate-mapping>

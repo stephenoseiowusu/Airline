@@ -87,8 +87,8 @@ public class FlightService {
       Transaction transaction = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.UserFlights inFlight = new DAO.models.UserFlights();
-      inFlight.setFlightid(userFlights.getFlightId());
-      inFlight.setUserid(userFlights.getFlightId());
+      inFlight.setFlightId(userFlights.getFlightId());
+      inFlight.setUserId(userFlights.getFlightId());
       try {
          session = airlineHibernateDatabase.getSession();
          transaction = session.beginTransaction();

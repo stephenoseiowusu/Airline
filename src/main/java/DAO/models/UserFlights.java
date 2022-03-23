@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class UserFlights {
 
-   public int userid;
-   public int flightid;
+   public int userId;
+   public int flightId;
+   public int userFlightsId;
 }

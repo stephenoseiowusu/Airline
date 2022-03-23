@@ -64,6 +64,7 @@ public class AirlineService {
      }
      return result;
  }
+
  public Boolean checkAdminCredentials(Credentials credentials){
      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
      Session session = null;
@@ -87,6 +88,24 @@ public class AirlineService {
              session.close();
 
          }
+     }
+     return result;
+ }
+ public AirlineUser getFlightUserInformation(Credentials credentials){
+     AirlineHibernateDatabase airlineHibernateDatabase = new AirlineHibernateDatabase();
+     Session session = null;
+
+     Query hb_query;
+     DTO.models.AirlineUser result = null;
+     try{
+         session = airlineHibernateDatabase.getSession();
+         hb_query = session.createQuery("from AirlineUser u where u.login_id = :loginId and u.password = :password");
+         hb_query.setParameter("loginId",credentials.getUsername());
+         hb_query.setParameter("password",credentials.getPassword());
+         DAO.models.AirlineUser airlineUser = (DAO.models.AirlineUser)hb_query.list().get(0);
+         result = new AirlineUser(airlineUser.getLogin_id(),airlineUser.getFirst_name(),airlineUser.getLast_name(),airlineUser.getPassword());
+     }catch(Exception e){
+         result = null;
      }
      return result;
  }
