@@ -56,14 +56,14 @@ public class AirlineAdminController {
         ResponseEntity<?> responseEntity;
         FlightService flightService = new FlightService();
        // Flight flight = flightService.
-        //Boolean result = flightService.deleteFlightFromDatabase(null);
-        //if(result == true){
+        Boolean result = flightService.deleteFlightFromDatabase(flightId);
+        if(result == true){
             responseEntity = ResponseEntity.status(HttpStatus.OK).build();
-        //}else if(result == null){
+        }else if(result == null){
             responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        //}else{
+        }else{
             responseEntity = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-        //}
+        }
         return responseEntity;
     }
 

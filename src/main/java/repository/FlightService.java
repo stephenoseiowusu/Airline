@@ -78,18 +78,19 @@ public class FlightService {
 
       return results;
    }
-   public Boolean deleteFlightFromDatabase(Flight flight){
+   public Boolean deleteFlightFromDatabase(int flightId){
       Boolean result = null;
       Session session = null;
       Transaction transaction = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.Flight inFlight = new DAO.models.Flight();
-      inFlight.setFlight_number(UUID.randomUUID().toString());
-      inFlight.setDepart_time(flight.getDepart_time());
-      inFlight.setLand_time(flight.getLand_time());
-      inFlight.setNumber_of_seats(flight.getNumber_of_seats());
-      inFlight.setOrigin(flight.getOrigin());
-      inFlight.setDestination(flight.getDestination());
+      inFlight.setFlight_id(flightId);
+      //inFlight.setFlight_number(UUID.randomUUID().toString());
+     // inFlight.setDepart_time(flight.getDepart_time());
+     // inFlight.setLand_time(flight.getLand_time());
+     // inFlight.setNumber_of_seats(flight.getNumber_of_seats());
+     // inFlight.setOrigin(flight.getOrigin());
+     // inFlight.setDestination(flight.getDestination());
       try {
 
          session = airlineHibernateDatabase.getSession();
