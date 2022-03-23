@@ -119,12 +119,11 @@ public class FlightService {
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.UserFlights inFlight = new DAO.models.UserFlights();
       inFlight.setFlightId(userFlights.getFlightId());
-      inFlight.setUserId(userFlights.getFlightId());
+      inFlight.setUserId(userFlights.getUserId());
       try {
          session = airlineHibernateDatabase.getSession();
          transaction = session.beginTransaction();
-         transaction.begin();
-         session.delete(inFlight);
+         session.save(inFlight);
          transaction.commit();
       }catch(Exception e){
          System.out.println(e.getMessage());
