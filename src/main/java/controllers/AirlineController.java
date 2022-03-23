@@ -3,6 +3,7 @@ package controllers;
 import DTO.models.AirlineUser;
 import DTO.models.Credentials;
 import DTO.models.Flight;
+import DTO.models.UserFlights;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +53,20 @@ public class AirlineController {
            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
        }else{
            responseEntity = ResponseEntity.ok(results);
+       }
+       return responseEntity;
+   }
+   @RequestMapping(method = RequestMethod.POST, value = "/bookFlightForUser")
+   public ResponseEntity<?> bookFlightForUser(@RequestBody UserFlights userFlights){
+       ResponseEntity<?> responseEntity;
+       FlightService flightService = new FlightService();
+       Boolean result  = flightService.bookFlightForUser(userFlights);
+       if(result == true){
+           responseEntity = ResponseEntity.ok().build();
+       }else if(result == false){
+           responseEntity = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+       }else {
+           responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
        }
        return responseEntity;
    }
