@@ -3,6 +3,7 @@ package repository;
 import DTO.models.Flight;
 import DTO.models.UserFlights;
 import airlineHibernate.AirlineHibernateDatabase;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -21,7 +22,7 @@ public class FlightService {
       Transaction transaction = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.Flight inFlight = new DAO.models.Flight();
-      inFlight.setFlight_number(UUID.randomUUID().toString());
+      inFlight.setFlight_number( RandomStringUtils.random(8, "0123456789abcdef") );
       inFlight.setDepart_time(flight.getDepart_time());
       inFlight.setLand_time(flight.getLand_time());
       inFlight.setNumber_of_seats(flight.getNumber_of_seats());
