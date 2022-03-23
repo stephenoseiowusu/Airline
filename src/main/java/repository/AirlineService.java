@@ -89,7 +89,7 @@ public class AirlineService {
      return result;
  }
  public AirlineUser getFlightUserInformation(Credentials credentials){
-     AirlineHibernateDatabase airlineHibernateDatabase = new AirlineHibernateDatabase();
+     AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
      Session session = null;
 
      Query hb_query;
