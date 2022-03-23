@@ -59,7 +59,7 @@ public class AirlineController {
     public ResponseEntity<?> deleteFlightForUser(@RequestParam("flightId") int flightId, @RequestParam("userId") int userId){
        ResponseEntity<?> responseEntity;
        FlightService flightService = new FlightService();
-       Boolean result = flightService.dropFligtForUser(userId,flightId);
+       Boolean result = flightService.dropFlightForUser(userId,flightId);
        if(result == true){
            responseEntity = ResponseEntity.status(HttpStatus.OK).build();
        }else if(result == null){

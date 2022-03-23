@@ -137,7 +137,7 @@ public class FlightService {
       }
       return result;
    }
-   public Boolean dropFligtForUser( int userID, int flightID){
+   public Boolean dropFlightForUser( int userID, int flightID){
       Boolean result = null;
       Session session = null;
       Transaction transaction = null;
