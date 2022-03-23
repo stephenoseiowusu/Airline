@@ -4,11 +4,14 @@ package controllers;
 import DTO.models.AirlineAdmin;
 import DTO.models.Credentials;
 import DTO.models.Flight;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import repository.AirlineService;
 import repository.FlightService;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/airlineAdminController")
@@ -48,6 +51,18 @@ public class AirlineAdminController {
             responseEntity = ResponseEntity.status(HttpStatus.CREATED).build();
         }else { // if (result == false){
             responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return responseEntity;
+    }
+    @GetMapping("/getAllAvailableFlights")
+    public ResponseEntity<?> getAllAvailableFlights(){
+        ResponseEntity<?> responseEntity;
+        FlightService service = new FlightService();
+        ArrayList<Flight> flights = service.getAllFlightsFromDatabase();
+        if(flights == null){
+            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }else{
+            responseEntity = ResponseEntity.ok(flights);
         }
         return responseEntity;
     }
