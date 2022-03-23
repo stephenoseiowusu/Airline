@@ -145,12 +145,12 @@ public class FlightService {
       try {
          session = airlineHibernateDatabase.getSession();
          transaction = session.beginTransaction();
-         transaction.begin();
-         Query query = session.createQuery("delete from user_flights where userid = :idOfUser and flightId = :idOfFlight");
+         Query query = session.createQuery("delete from UserFlights where userid = :idOfUser and flightId = :idOfFlight");
          query.setParameter("idOfFlight",flightID);
          query.setParameter("idOfUser",userID);
          query.executeUpdate();
          transaction.commit();
+         result = true;
       }catch(Exception e){
          System.out.println(e.getMessage());
          result = false;
