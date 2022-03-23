@@ -44,7 +44,13 @@ public class FlightService {
       }
       return result;
    }
-
+   public ArrayList<Flight> getFlightsForUser(int userid){
+      ArrayList<Flight> results = new ArrayList<>();
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase =  AirlineHibernateDatabase.getInstance();
+      //String query = "From"
+      return null;
+   }
    public Boolean deleteFlightFromDatabase(Flight flight){
       Boolean result = null;
       Session session = null;
