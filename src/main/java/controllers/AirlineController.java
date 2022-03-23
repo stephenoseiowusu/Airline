@@ -33,7 +33,8 @@ public class AirlineController {
        AirlineService airlineService = new AirlineService();
        Boolean result = airlineService.checkFlightUserCredentials(credentials);
        if(result == true){
-           responseEntity = ResponseEntity.ok(HttpStatus.OK);
+           DTO.models.AirlineUser airlineUser = airlineService.getFlightUserInformation(credentials);
+           responseEntity = ResponseEntity.ok(airlineUser);
        }else if(result == false){
            responseEntity = ResponseEntity.status(HttpStatus.FORBIDDEN).build();
        }else{
