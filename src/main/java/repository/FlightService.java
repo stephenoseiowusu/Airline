@@ -31,9 +31,10 @@ public class FlightService {
 
          session = airlineHibernateDatabase.getSession();
          transaction = session.beginTransaction();
-         transaction.begin();
+
          session.save(inFlight);
          transaction.commit();
+         result = true;
       }catch(Exception e){
          result = false;
 
@@ -95,7 +96,7 @@ public class FlightService {
 
          session = airlineHibernateDatabase.getSession();
          transaction = session.beginTransaction();
-         transaction.begin();
+
          session.delete(inFlight);
          transaction.commit();
       }catch(Exception e){
