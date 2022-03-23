@@ -14,6 +14,7 @@ import repository.FlightService;
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/airlineAdminController")
 public class AirlineAdminController {
     @PostMapping("/createAdmin")

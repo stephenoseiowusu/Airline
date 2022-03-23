@@ -14,6 +14,7 @@ import repository.FlightService;
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/airlineController")
 public class AirlineController {
 
