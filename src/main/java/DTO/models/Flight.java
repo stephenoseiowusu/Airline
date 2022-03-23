@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Data
 public class Flight {
-    int    flight_id;
+    Integer    flight_id;
     String origin;
     String destination;
     String flight_number;
