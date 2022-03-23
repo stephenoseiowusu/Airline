@@ -55,14 +55,15 @@ public class AirlineAdminController {
     public ResponseEntity<?> deleteFlightInDatabase(@RequestParam("flightId") int flightId){
         ResponseEntity<?> responseEntity;
         FlightService flightService = new FlightService();
-        Boolean result = flightService.deleteFlightFromDatabase(null);
-        if(result == true){
+       // Flight flight = flightService.
+        //Boolean result = flightService.deleteFlightFromDatabase(null);
+        //if(result == true){
             responseEntity = ResponseEntity.status(HttpStatus.OK).build();
-        }else if(result == null){
+        //}else if(result == null){
             responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }else{
+        //}else{
             responseEntity = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-        }
+        //}
         return responseEntity;
     }
 
