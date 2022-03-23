@@ -44,6 +44,7 @@ public class FlightService {
       }
       return result;
    }
+
    public Boolean deleteFlightFromDatabase(Flight flight){
       Boolean result = null;
       Session session = null;
