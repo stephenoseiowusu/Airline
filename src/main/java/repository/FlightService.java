@@ -125,6 +125,7 @@ public class FlightService {
          transaction = session.beginTransaction();
          session.save(inFlight);
          transaction.commit();
+         result = true;
       }catch(Exception e){
          System.out.println(e.getMessage());
          result = false;

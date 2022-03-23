@@ -71,10 +71,10 @@ public class AirlineController {
        return responseEntity;
    }
    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteFlightForUser")
-    public ResponseEntity<?> deleteFlightForUser(@RequestParam("flightId") int flightId, @RequestParam("userId") int userId){
+    public ResponseEntity<?> deleteFlightForUser(@RequestBody UserFlights userFlights){
        ResponseEntity<?> responseEntity;
        FlightService flightService = new FlightService();
-       Boolean result = flightService.dropFlightForUser(userId,flightId);
+       Boolean result = flightService.dropFlightForUser(userFlights.getUserId(),userFlights.getFlightId());
        if(result == true){
            responseEntity = ResponseEntity.status(HttpStatus.OK).build();
        }else if(result == null){
