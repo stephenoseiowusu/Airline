@@ -170,7 +170,7 @@ public class FlightService {
       try {
          session = airlineHibernateDatabase.getSession();
 
-         Query query = session.createQuery("From Flights");
+         Query query = session.createQuery("From Flight");
 
          List<DAO.models.Flight> temp= (List<DAO.models.Flight>)query.list();
          for( DAO.models.Flight flight: temp){
