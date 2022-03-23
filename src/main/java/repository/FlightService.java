@@ -48,8 +48,35 @@ public class FlightService {
       ArrayList<Flight> results = new ArrayList<>();
       Session session = null;
       AirlineHibernateDatabase airlineHibernateDatabase =  AirlineHibernateDatabase.getInstance();
-      //String query = "From"
-      return null;
+      String query = "From UserFlights uf where uf.userId = :userid";
+      Query hbQuery;
+      try{
+         session = airlineHibernateDatabase.getSession();
+         hbQuery = session.createQuery(query);
+         hbQuery.setParameter("userid",userid);
+         List<DAO.models.UserFlights> userFlights = (List<DAO.models.UserFlights>) hbQuery.list();
+         for(DAO.models.UserFlights temp: userFlights){
+            String query2 = "From Flight f where f.flight_id = :flightId";
+            Query hb_Query2 = session.createQuery(query2);
+            hb_Query2.setParameter("fightId", temp.getFlightId());
+            DAO.models.Flight flight = ((List<DAO.models.Flight>)hb_Query2.list()).get(0);//.get(0);
+            Flight flight1 = new Flight();
+            flight1.setFlight_id(flight.getFlight_id());
+            flight1.setFlight_number(flight.getFlight_number());
+            flight1.setOrigin(flight.getOrigin());
+            flight1.setLand_time(flight.getLand_time());
+            flight1.setDepart_time(flight.getDepart_time());
+            flight1.setNumber_of_seats(flight.getNumber_of_seats());
+            flight1.setDestination(flight.getDestination());
+            results.add(flight1);
+         }
+
+      }catch(Exception e){
+         System.out.println(e.getMessage());
+         results = null;
+      }
+
+      return results;
    }
    public Boolean deleteFlightFromDatabase(Flight flight){
       Boolean result = null;
