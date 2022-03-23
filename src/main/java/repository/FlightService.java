@@ -99,6 +99,7 @@ public class FlightService {
 
          session.delete(inFlight);
          transaction.commit();
+         result = true;
       }catch(Exception e){
          System.out.println(e.getMessage());
          result = false;
