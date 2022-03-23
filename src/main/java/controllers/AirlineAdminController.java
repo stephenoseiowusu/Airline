@@ -6,10 +6,7 @@ import DTO.models.Credentials;
 import DTO.models.Flight;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import repository.AirlineService;
 import repository.FlightService;
 
@@ -54,6 +51,19 @@ public class AirlineAdminController {
         }
         return responseEntity;
     }
-    //@DeleteMapping
+    @DeleteMapping("/deleteFlight")
+    public ResponseEntity<?> deleteFlightInDatabase(@RequestParam("flightId") int flightId){
+        ResponseEntity<?> responseEntity;
+        FlightService flightService = new FlightService();
+        Boolean result = flightService.deleteFlightFromDatabase(null);
+        if(result == true){
+            responseEntity = ResponseEntity.status(HttpStatus.OK).build();
+        }else if(result == null){
+            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }else{
+            responseEntity = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+        }
+        return responseEntity;
+    }
 
 }
