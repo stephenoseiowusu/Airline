@@ -8,23 +8,14 @@ public class AirlineUser {
     private String firstName;
     private String password;
     private String lastName;
-    public AirlineUser(String username, String firstName,  String lastName, String password){
+    public int userId;
+    public AirlineUser(int userId,String username, String firstName,  String lastName, String password){
         this.username = username;
         this.firstName = firstName;
         this.password = password;
         this.lastName = lastName;
+        this.userId = userId;
     }
-    public String getUserName(){
-        return this.username;
-    }
-    public String getFirstName(){
-        return this.firstName;
-    }
-    public String getLastName(){
-        return this.lastName;
-    }
-    public String getPassword(){
-        return this.password;
-    }
+
 
 }

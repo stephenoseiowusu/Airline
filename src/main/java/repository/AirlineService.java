@@ -20,12 +20,12 @@ public class AirlineService {
      boolean result = false;
      try{
          tx = session.beginTransaction();
-         DAO.models.AirlineUser airLineUser1 = new DAO.models.AirlineUser(airLineUser.getUserName(),airLineUser.getFirstName()
+         DAO.models.AirlineUser airLineUser1 = new DAO.models.AirlineUser(airLineUser.getUsername(),airLineUser.getFirstName()
                                                                         ,airLineUser.getLastName(),airLineUser.getPassword());
          airLineUser1.setFirst_name(airLineUser.getFirstName());
          airLineUser1.setLast_name(airLineUser.getLastName());
          airLineUser1.setPassword(airLineUser.getPassword());
-         airLineUser1.setLogin_id(airLineUser.getUserName());
+         airLineUser1.setLogin_id(airLineUser.getUsername());
          session.save(airLineUser1);
          tx.commit();
          result = true;
@@ -100,7 +100,7 @@ public class AirlineService {
          hb_query.setParameter("loginId",credentials.getUsername());
          hb_query.setParameter("password",credentials.getPassword());
          DAO.models.AirlineUser airlineUser = (DAO.models.AirlineUser)hb_query.list().get(0);
-         result = new AirlineUser(airlineUser.getLogin_id(),airlineUser.getFirst_name(),airlineUser.getLast_name(),airlineUser.getPassword());
+         result = new AirlineUser(airlineUser.getId(),airlineUser.getLogin_id(),airlineUser.getFirst_name(),airlineUser.getLast_name(),airlineUser.getPassword());
      }catch(Exception e){
          result = null;
      }
