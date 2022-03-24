@@ -71,6 +71,18 @@ public class AirlineController {
        }
        return responseEntity;
    }
+    @GetMapping("/getAllAvailableFlights")
+    public ResponseEntity<?> getAllAvailableFlights(){
+        ResponseEntity<?> responseEntity;
+        FlightService service = new FlightService();
+        ArrayList<Flight> flights = service.getAllFlightsFromDatabase();
+        if(flights == null){
+            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }else{
+            responseEntity = ResponseEntity.ok(flights);
+        }
+        return responseEntity;
+    }
    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteFlightForUser")
     public ResponseEntity<?> deleteFlightForUser(@RequestBody UserFlights userFlights){
        ResponseEntity<?> responseEntity;
