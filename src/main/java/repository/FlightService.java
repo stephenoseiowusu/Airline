@@ -9,7 +9,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,8 +25,8 @@ public class FlightService {
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.Flight inFlight = new DAO.models.Flight();
       inFlight.setFlight_number( RandomStringUtils.random(8, "0123456789abcdef") );
-      inFlight.setDepart_time(flight.getDepart_time());
-      inFlight.setLand_time(flight.getLand_time());
+      inFlight.setDepart_time(new Time(flight.getDepart_time().getTime()));
+      inFlight.setLand_time(new Time(flight.getLand_time().getTime()));
       inFlight.setNumber_of_seats(flight.getNumber_of_seats());
       inFlight.setOrigin(flight.getOrigin());
       inFlight.setDestination(flight.getDestination());
@@ -60,7 +62,7 @@ public class FlightService {
          for(DAO.models.UserFlights temp: userFlights){
             String query2 = "From Flight f where f.flight_id = :flightId";
             Query hb_Query2 = session.createQuery(query2);
-            hb_Query2.setParameter("fightId", temp.getFlightId());
+            hb_Query2.setParameter("flightId", temp.getFlightId());
             DAO.models.Flight flight = ((List<DAO.models.Flight>)hb_Query2.list()).get(0);//.get(0);
             Flight flight1 = new Flight();
             flight1.setFlight_id(flight.getFlight_id());

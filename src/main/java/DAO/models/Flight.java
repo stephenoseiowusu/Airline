@@ -1,8 +1,10 @@
 package DAO.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Time;
 
 @Data
 public class Flight {
@@ -10,8 +12,9 @@ public class Flight {
   String origin;
   String destination;
   String flight_number;
-  Date   depart_time;
-  Date   land_time;
+
+  Time depart_time;
+  Time   land_time;
   int    number_of_seats;
 
 }

@@ -1,8 +1,10 @@
 package DTO.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 @Data
 public class Flight {
@@ -10,8 +12,10 @@ public class Flight {
     String origin;
     String destination;
     String flight_number;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     Date depart_time;
-    Date   land_time;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    Date land_time;
     int    number_of_seats;
 
 }

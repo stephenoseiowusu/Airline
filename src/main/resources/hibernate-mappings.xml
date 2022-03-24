@@ -37,8 +37,8 @@
         <property name = "origin" column="origin" type = "string"></property>
         <property name = "destination" column = "destination" type = "string"></property>  
         <property name = "flight_number" column = "flight_number" type = "string"></property>
-        <property name = "depart_time" column="depart_time" type = "date"></property>
-        <property name="land_time" column = "land_time" type = "date"></property>
+        <property name = "depart_time" column="depart_time" type = "time"></property>
+        <property name="land_time" column = "land_time" type = "time"></property>
         <property name = "number_of_seats" column = "number_of_seats" type = "int"></property>
     </class>
     <class name = "DAO.models.UserFlights" table = "user_flights">
