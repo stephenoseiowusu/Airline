@@ -51,6 +51,7 @@
         </id>
         <property name = "userId" column="userid" type = "int"></property>
         <property name = "flightId" column="flightid" type="int"></property>
+        <property name = "seatsBooked" column = "seats_booked" type = "int"></property>
     </class>
 
 </hibernate-mapping>

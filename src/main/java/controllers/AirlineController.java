@@ -95,7 +95,7 @@ public class AirlineController {
         }
         return responseEntity;
     }
-    @RequestMapping(method = RequestMethod.GET, value = "/searchFlights")
+    @RequestMapping(method = RequestMethod.POST, value = "/searchFlights")
     public ResponseEntity<?> getFlights(@RequestBody FlightSearch flightSearch){
        ResponseEntity responseEntity;
        FlightService flightService = new FlightService();

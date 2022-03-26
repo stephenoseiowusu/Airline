@@ -206,20 +206,22 @@ public class FlightService {
       Session session = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       try{
+         session = airlineHibernateDatabase.getSession();
          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-         Query query = session.createQuery("From Flight F where F.origin = :origin and F.destination = :destination and F.depart_time between :firstDate and :secondDate");
+         Query query = session.createQuery("From Flight F where F.origin = :origin and F.destination = :destination");//and F.depart_time between :firstDate and :secondDate");
          String firstDate = format.format(flightSearch.getFromDate());
          String secondDate = format.format(flightSearch.getToDate());
          query.setParameter("origin",flightSearch.getFromCity());
          query.setParameter("destination", flightSearch.getToCity());
-         query.setParameter("firstDate",flightSearch.getFromDate());
-         query.setParameter("secondDate",flightSearch.getToDate());
+         //query.setParameter("firstDate",flightSearch.getFromDate());
+         //query.setParameter("secondDate",flightSearch.getToDate());
          List<DAO.models.Flight> temp= (List<DAO.models.Flight>)query.list();
          for( DAO.models.Flight flight: temp){
             Flight temp_flight = new Flight();
             temp_flight.setFlight_id(flight.getFlight_id());
             temp_flight.setFlight_number(flight.getFlight_number());
             temp_flight.setDestination(flight.getDestination());
+            temp_flight.setAirline(flight.getAirline());
             temp_flight.setNumber_of_seats(flight.getNumber_of_seats());
             temp_flight.setDepart_time(flight.getDepart_time());
             temp_flight.setLand_time(flight.getLand_time());
@@ -227,6 +229,7 @@ public class FlightService {
             listOfFlights.add(temp_flight);
          }
       }catch(Exception e){
+         listOfFlights = null;
          System.out.println(e.getMessage());
       }
       return listOfFlights;
