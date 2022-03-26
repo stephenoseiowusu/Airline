@@ -27,7 +27,7 @@ public class AirlineHibernateDatabase {
                               .addDirectory(new File(""))
                               .addResource("hibernate-mappings.xml")
                               .buildSessionFactory();
-        }catch(Throwable e){
+        }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }

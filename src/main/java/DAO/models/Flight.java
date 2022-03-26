@@ -12,9 +12,11 @@ public class Flight {
   String origin;
   String destination;
   String flight_number;
-
+  String airline;
   Time depart_time;
   Time   land_time;
   int    number_of_seats;
+
+
 
 }

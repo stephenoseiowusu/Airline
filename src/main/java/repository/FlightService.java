@@ -1,6 +1,7 @@
 package repository;
 
 import DTO.models.Flight;
+import DTO.models.FlightSearch;
 import DTO.models.UserFlights;
 import airlineHibernate.AirlineHibernateDatabase;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -9,11 +10,10 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class FlightService {
@@ -25,8 +25,18 @@ public class FlightService {
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.Flight inFlight = new DAO.models.Flight();
       inFlight.setFlight_number( RandomStringUtils.random(8, "0123456789abcdef") );
-      inFlight.setDepart_time(new Time(flight.getDepart_time().getTime()));
-      inFlight.setLand_time(new Time(flight.getLand_time().getTime()));
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(flight.getDepart_time());
+      calendar.add(Calendar.HOUR,4);
+      Date newDate = calendar.getTime();
+
+      //java.sql.Date sqlDate = new java.sql.Date(newDateFromDate.getTime());
+      inFlight.setDepart_time(new Time(newDate.getTime()));
+      calendar.setTime(flight.getLand_time());
+      calendar.add(Calendar.HOUR,4);
+      newDate = calendar.getTime();
+      inFlight.setLand_time(new Time(newDate.getTime()));
+
       inFlight.setNumber_of_seats(flight.getNumber_of_seats());
       inFlight.setOrigin(flight.getOrigin());
       inFlight.setDestination(flight.getDestination());
@@ -39,6 +49,7 @@ public class FlightService {
          transaction.commit();
          result = true;
       }catch(Exception e){
+         System.out.println(e.getMessage());
          result = false;
 
       }finally{
@@ -163,6 +174,36 @@ public class FlightService {
          }
       }
       return result;
+   }
+   public ArrayList<Flight> getFlightsWithCriteria(FlightSearch flightSearch){
+      ArrayList<Flight> listOfFlights = new ArrayList<>();
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      try{
+         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+         Query query = session.createQuery("From Flight F where F.origin = :origin and F.destination = :destination and F.depart_time between :firstDate and :secondDate");
+         String firstDate = format.format(flightSearch.getFromDate());
+         String secondDate = format.format(flightSearch.getToDate());
+         query.setParameter("origin",flightSearch.getFromCity());
+         query.setParameter("destination", flightSearch.getToCity());
+         query.setParameter("firstDate",flightSearch.getFromDate());
+         query.setParameter("secondDate",flightSearch.getToDate());
+         List<DAO.models.Flight> temp= (List<DAO.models.Flight>)query.list();
+         for( DAO.models.Flight flight: temp){
+            Flight temp_flight = new Flight();
+            temp_flight.setFlight_id(flight.getFlight_id());
+            temp_flight.setFlight_number(flight.getFlight_number());
+            temp_flight.setDestination(flight.getDestination());
+            temp_flight.setNumber_of_seats(flight.getNumber_of_seats());
+            temp_flight.setDepart_time(flight.getDepart_time());
+            temp_flight.setLand_time(flight.getLand_time());
+            temp_flight.setOrigin(flight.getOrigin());
+            listOfFlights.add(temp_flight);
+         }
+      }catch(Exception e){
+         System.out.println(e.getMessage());
+      }
+      return listOfFlights;
    }
    public ArrayList<Flight> getAllFlightsFromDatabase(){
       ArrayList<Flight> listOfFlights = new ArrayList<>();

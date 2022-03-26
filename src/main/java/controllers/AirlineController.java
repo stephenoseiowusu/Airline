@@ -1,9 +1,6 @@
 package controllers;
 
-import DTO.models.AirlineUser;
-import DTO.models.Credentials;
-import DTO.models.Flight;
-import DTO.models.UserFlights;
+import DTO.models.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,6 +80,18 @@ public class AirlineController {
         }
         return responseEntity;
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/searchFlights")
+    public ResponseEntity<?> getFlights(@RequestBody FlightSearch flightSearch){
+       ResponseEntity responseEntity;
+       FlightService flightService = new FlightService();
+       ArrayList<Flight> flights = flightService.getFlightsWithCriteria(flightSearch);
+       if(flights != null){
+           responseEntity = ResponseEntity.ok(flights);
+       }else{
+           responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+       }
+       return responseEntity;
+   }
    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteFlightForUser")
     public ResponseEntity<?> deleteFlightForUser(@RequestBody UserFlights userFlights){
        ResponseEntity<?> responseEntity;

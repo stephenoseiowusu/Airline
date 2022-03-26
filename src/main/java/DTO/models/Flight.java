@@ -11,6 +11,7 @@ public class Flight {
     Integer    flight_id;
     String origin;
     String destination;
+    String airline;
     String flight_number;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     Date depart_time;

@@ -27,7 +27,7 @@
         <property name = "password" column = "password" type = "string"/>
         <property name="login_id" column="login_id" type="string"/>
     </class>
-    <class name = "DAO.models.Flight" table = "Flights">
+    <class name = "DAO.models.Flight" table = "flights">
         <meta attribute = "class-description">
             This class contains the flights
         </meta>
@@ -37,6 +37,7 @@
         <property name = "origin" column="origin" type = "string"></property>
         <property name = "destination" column = "destination" type = "string"></property>  
         <property name = "flight_number" column = "flight_number" type = "string"></property>
+        <property name = "airline" column = "airline" type = "string"></property>
         <property name = "depart_time" column="depart_time" type = "time"></property>
         <property name="land_time" column = "land_time" type = "time"></property>
         <property name = "number_of_seats" column = "number_of_seats" type = "int"></property>
