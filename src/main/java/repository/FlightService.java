@@ -24,7 +24,7 @@ public class FlightService {
       Transaction transaction = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.Flight inFlight = new DAO.models.Flight();
-      inFlight.setFlight_number( flight.getAirline().substring(0,3).toUpperCase(Locale.ROOT) + "-" + RandomStringUtils.random(8, "0123456789abcdef") );
+      inFlight.setFlight_number( flight.getAirline().substring(0,3).toUpperCase(Locale.ROOT) + "-" + RandomStringUtils.random(4, "0123456789") );
       Calendar calendar = Calendar.getInstance();
       calendar.setTime(flight.getDepart_time());
       calendar.add(Calendar.HOUR,4);
