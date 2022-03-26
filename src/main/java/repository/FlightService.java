@@ -24,7 +24,7 @@ public class FlightService {
       Transaction transaction = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
       DAO.models.Flight inFlight = new DAO.models.Flight();
-      inFlight.setFlight_number( RandomStringUtils.random(8, "0123456789abcdef") );
+      inFlight.setFlight_number( flight.getAirline().substring(0,3).toUpperCase(Locale.ROOT) + "-" + RandomStringUtils.random(8, "0123456789abcdef") );
       Calendar calendar = Calendar.getInstance();
       calendar.setTime(flight.getDepart_time());
       calendar.add(Calendar.HOUR,4);
@@ -40,6 +40,7 @@ public class FlightService {
       inFlight.setNumber_of_seats(flight.getNumber_of_seats());
       inFlight.setOrigin(flight.getOrigin());
       inFlight.setDestination(flight.getDestination());
+      inFlight.setAirline(flight.getAirline());
       try {
 
          session = airlineHibernateDatabase.getSession();
@@ -83,6 +84,7 @@ public class FlightService {
             flight1.setDepart_time(flight.getDepart_time());
             flight1.setNumber_of_seats(flight.getNumber_of_seats());
             flight1.setDestination(flight.getDestination());
+            flight1.setAirline(flight.getAirline());
             results.add(flight1);
          }
 
@@ -225,6 +227,7 @@ public class FlightService {
             temp_flight.setDepart_time(flight.getDepart_time());
             temp_flight.setLand_time(flight.getLand_time());
             temp_flight.setOrigin(flight.getOrigin());
+            temp_flight.setAirline(flight.getAirline());
             listOfFlights.add(temp_flight);
          }
 
