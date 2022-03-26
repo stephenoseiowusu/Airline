@@ -82,7 +82,7 @@ public class FlightService {
       }
       return result;
    }
-   public ArrayList<Flight> getFlightsForUser(int userid){
+   public ArrayList<Flight> getFlightsForUser(int userid, int page){
       ArrayList<Flight> results = new ArrayList<>();
       Session session = null;
       AirlineHibernateDatabase airlineHibernateDatabase =  AirlineHibernateDatabase.getInstance();
@@ -92,6 +92,8 @@ public class FlightService {
          session = airlineHibernateDatabase.getSession();
          hbQuery = session.createQuery(query);
          hbQuery.setParameter("userid",userid);
+         hbQuery.setFirstResult(page * 10);
+         hbQuery.setMaxResults(10);
          List<DAO.models.UserFlights> userFlights = (List<DAO.models.UserFlights>) hbQuery.list();
          for(DAO.models.UserFlights temp: userFlights){
             String query2 = "From Flight f where f.flight_id = :flightId";

@@ -1,6 +1,7 @@
 package controllers;
 
 import DTO.models.*;
+import org.json.JSONObject;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,14 +44,28 @@ public class AirlineController {
        return responseEntity;
    }
    @RequestMapping(method = RequestMethod.GET, value = "/getAllFlightsForUser")
-   public ResponseEntity<?> getAllFlightsForUser(@RequestParam("userId") int userId){
+   public ResponseEntity<?> getAllFlightsForUser(@RequestParam("userId") int userId, @RequestParam("page") int page){
        ResponseEntity<?> responseEntity;
        FlightService flightService = new FlightService();
-       ArrayList<Flight> results  = flightService.getFlightsForUser(userId);
+       ArrayList<Flight> results  = flightService.getFlightsForUser(userId,page);
        if(results == null){
            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
        }else{
            responseEntity = ResponseEntity.ok(results);
+       }
+       return responseEntity;
+   }
+   @RequestMapping(method = RequestMethod.GET, value = "/getCountOfFlightsForUser")
+   public ResponseEntity<?> getCOuntOfFlightsForUser(@RequestParam("userid")int userid){
+       ResponseEntity<?> responseEntity;
+       FlightService flightService = new FlightService();
+       int result = flightService.getCountOfFlightsForUser(userid);
+       JSONObject jsonObject = new JSONObject();
+       if(result == -1){
+           responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+       }else{
+           jsonObject.put("flightsCount",result);
+           responseEntity = ResponseEntity.ok(jsonObject.toString());
        }
        return responseEntity;
    }
