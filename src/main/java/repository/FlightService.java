@@ -60,6 +60,28 @@ public class FlightService {
       }
       return result;
    }
+   public int getCountOfFlightsForUser(int userid){
+      ArrayList<Flight> results = new ArrayList<>();
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase =  AirlineHibernateDatabase.getInstance();
+      String query = "From UserFlights uf where uf.userId = :userid";
+      Query hbQuery;
+      int result;
+      try{
+         session = airlineHibernateDatabase.getSession();
+         hbQuery = session.createQuery(query);
+         hbQuery.setParameter("userid",userid);
+         List<DAO.models.UserFlights> userFlights = (List<DAO.models.UserFlights>) hbQuery.list();
+         result = userFlights.size();
+
+      }catch(Exception e){
+         System.out.println(e.getMessage());
+         result = -1;
+      }finally {
+         session.close();
+      }
+      return result;
+   }
    public ArrayList<Flight> getFlightsForUser(int userid){
       ArrayList<Flight> results = new ArrayList<>();
       Session session = null;
