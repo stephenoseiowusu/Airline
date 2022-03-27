@@ -9,15 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
 import java.math.BigInteger;
-import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -35,7 +28,8 @@ public class AirlineService {
                                                                         ,airLineUser.getLastName(),airLineUser.getPassword());
          airLineUser1.setFirst_name(airLineUser.getFirstName());
          airLineUser1.setLast_name(airLineUser.getLastName());
-         airLineUser1.setPassword(airLineUser.getPassword());
+         String encryptedUserPwd = encryptPassword(airLineUser.getPassword());
+         airLineUser1.setPassword(encryptedUserPwd);
          airLineUser1.setLogin_id(airLineUser.getUsername());
          session.save(airLineUser1);
          tx.commit();
@@ -49,20 +43,6 @@ public class AirlineService {
      }
      return result;
  }
-
-private static byte[] encryptF(String input,Key pkey,Cipher c) throws InvalidKeyException, BadPaddingException,
-
-        IllegalBlockSizeException {
-
-    c.init(Cipher.ENCRYPT_MODE, pkey);
-
-    byte[] inputBytes = input.getBytes();
-
-    System.out.println("input "+ input);
-    System.out.println("Encrypt "+ inputBytes);
-
-    return c.doFinal(inputBytes);
-}
 
  public String encryptPassword(String originalPwd) throws Exception {
      try {
@@ -129,8 +109,8 @@ private static byte[] encryptF(String input,Key pkey,Cipher c) throws InvalidKey
          String query = "FROM AirlineAdmin a where a.login_id = :login_id and a.password = :password";
          hb_query = session.createQuery(query);
          hb_query.setParameter("login_id",credentials.getUsername());
-         String encryptedOrigPwd = encryptPassword(credentials.getPassword());
-         hb_query.setParameter("password",encryptedOrigPwd);
+         String encryptedAdminPwd = encryptPassword(credentials.getPassword());
+         hb_query.setParameter("password",encryptedAdminPwd);
          int found = hb_query.list().size();
          if(found > 0){
              result = true;
@@ -155,9 +135,10 @@ private static byte[] encryptF(String input,Key pkey,Cipher c) throws InvalidKey
          session = airlineHibernateDatabase.getSession();
          hb_query = session.createQuery("from AirlineUser u where u.login_id = :loginId and u.password = :password");
          hb_query.setParameter("loginId",credentials.getUsername());
-         hb_query.setParameter("password",credentials.getPassword());
+         String encryptedUserPwd = encryptPassword(credentials.getPassword());
+         hb_query.setParameter("password",encryptedUserPwd);
          DAO.models.AirlineUser airlineUser = (DAO.models.AirlineUser)hb_query.list().get(0);
-         result = new AirlineUser(airlineUser.getId(),airlineUser.getLogin_id(),airlineUser.getFirst_name(),airlineUser.getLast_name(),airlineUser.getPassword());
+         result = new AirlineUser(airlineUser.getId(),airlineUser.getLogin_id(),airlineUser.getFirst_name(),airlineUser.getLast_name(),encryptedUserPwd);
      }catch(Exception e){
          result = null;
      }
@@ -172,7 +153,8 @@ private static byte[] encryptF(String input,Key pkey,Cipher c) throws InvalidKey
          session = airlineHibernateDatabase.getSession();
          hb_query = session.createQuery("from AirlineUser u where u.login_id = :loginId and u.password = :password");
          hb_query.setParameter("loginId",credentials.getUsername());
-         hb_query.setParameter("password",credentials.getPassword());
+         String encryptedUserPwd = encryptPassword(credentials.getPassword());
+         hb_query.setParameter("password",encryptedUserPwd);
          int found = hb_query.list().size();
          if(found > 0){
              result = true;
