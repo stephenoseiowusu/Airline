@@ -10,6 +10,17 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.RandomStringUtils;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import java.math.BigInteger;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 @Service
 public class AirlineService {
 
@@ -38,6 +49,48 @@ public class AirlineService {
      }
      return result;
  }
+
+private static byte[] encryptF(String input,Key pkey,Cipher c) throws InvalidKeyException, BadPaddingException,
+
+        IllegalBlockSizeException {
+
+    c.init(Cipher.ENCRYPT_MODE, pkey);
+
+    byte[] inputBytes = input.getBytes();
+
+    System.out.println("input "+ input);
+    System.out.println("Encrypt "+ inputBytes);
+
+    return c.doFinal(inputBytes);
+}
+
+ public String encryptPassword(String originalPwd) throws Exception {
+     try {
+
+         // Static getInstance method is called with hashing MD5
+         MessageDigest md = MessageDigest.getInstance("MD5");
+
+         // digest() method is called to calculate message digest
+         //  of an input digest() return array of byte
+         byte[] messageDigest = md.digest(originalPwd.getBytes());
+
+         // Convert byte array into signum representation
+         BigInteger no = new BigInteger(1, messageDigest);
+
+         // Convert message digest into hex value
+         String hashtext = no.toString(16);
+         while (hashtext.length() < 32) {
+             hashtext = "0" + hashtext;
+         }
+         return hashtext;
+     }
+
+     // For specifying wrong message digest algorithms
+     catch (NoSuchAlgorithmException e) {
+         throw new RuntimeException(e);
+     }
+ }
+
  public Boolean addAdmin(AirlineAdmin airLineAdmin)
  {
      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
@@ -46,7 +99,10 @@ public class AirlineService {
      try{
        session = airlineHibernateDatabase.getSession();
        Transaction tx = session.beginTransaction();
-       DAO.models.AirlineAdmin airlineAdmin = new DAO.models.AirlineAdmin(airLineAdmin.getLogin_id(),airLineAdmin.getPassword()
+       // Encrypt password for admin
+       String encryptedPwd = encryptPassword(airLineAdmin.getPassword());
+
+       DAO.models.AirlineAdmin airlineAdmin = new DAO.models.AirlineAdmin(airLineAdmin.getLogin_id(),encryptedPwd
                  ,airLineAdmin.getFirst_name(),airLineAdmin.getLast_name());
        session.save(airlineAdmin);
        tx.commit();
@@ -73,7 +129,8 @@ public class AirlineService {
          String query = "FROM AirlineAdmin a where a.login_id = :login_id and a.password = :password";
          hb_query = session.createQuery(query);
          hb_query.setParameter("login_id",credentials.getUsername());
-         hb_query.setParameter("password",credentials.getPassword());
+         String encryptedOrigPwd = encryptPassword(credentials.getPassword());
+         hb_query.setParameter("password",encryptedOrigPwd);
          int found = hb_query.list().size();
          if(found > 0){
              result = true;

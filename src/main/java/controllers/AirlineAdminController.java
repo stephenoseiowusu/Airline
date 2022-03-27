@@ -56,6 +56,18 @@ public class AirlineAdminController {
         }
         return responseEntity;
     }
+    @GetMapping("/getFlightsByPagination")
+    public ResponseEntity<?> getFlightsByPage(@RequestParam("page") int page){
+        ResponseEntity<?> responseEntity;
+        FlightService service = new FlightService();
+        ArrayList<Flight> flights = service.getFlightsFromDatabase(page);
+        if(flights != null) {
+            responseEntity = ResponseEntity.ok(flights);
+        }else{
+            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return responseEntity;
+    }
     @GetMapping("/getAllAvailableFlights")
     public ResponseEntity<?> getAllAvailableFlights(){
         ResponseEntity<?> responseEntity;

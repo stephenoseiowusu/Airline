@@ -306,4 +306,40 @@ public class FlightService {
       }
       return number_of_flights_stored;
    }
+   public ArrayList<Flight> getFlightsFromDatabase(int page){
+      ArrayList<Flight> listOfFlights = new ArrayList<>();
+
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      try {
+         session = airlineHibernateDatabase.getSession();
+
+         Query query = session.createQuery("From Flight");
+         query.setMaxResults(5);
+         query.setFirstResult(page * 5);
+         List<DAO.models.Flight> temp= (List<DAO.models.Flight>)query.list();
+         for( DAO.models.Flight flight: temp){
+            Flight temp_flight = new Flight();
+            temp_flight.setFlight_id(flight.getFlight_id());
+            temp_flight.setFlight_number(flight.getFlight_number());
+            temp_flight.setDestination(flight.getDestination());
+            temp_flight.setNumber_of_seats(flight.getNumber_of_seats());
+            temp_flight.setDepart_time(flight.getDepart_time());
+            temp_flight.setLand_time(flight.getLand_time());
+            temp_flight.setOrigin(flight.getOrigin());
+            temp_flight.setAirline(flight.getAirline());
+            listOfFlights.add(temp_flight);
+         }
+
+      }catch(Exception e){
+         System.out.println(e.getMessage());
+         listOfFlights = null;
+
+      }finally{
+         if(session != null){
+            session.close();
+         }
+      }
+      return listOfFlights;
+   }
 }
