@@ -102,9 +102,9 @@ public class AirlineAdminController {
         FlightService flightService = new FlightService();
         int number_of_flights_in_database = flightService.getNumberOfFlightsInDatabase();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("number_of_total_flights",number_of_flights_in_database);
+        jsonObject.put("number_of_flights",number_of_flights_in_database);
         if(number_of_flights_in_database != -1){
-            responseEntity = ResponseEntity.ok(jsonObject);
+            responseEntity = ResponseEntity.ok(jsonObject.toString());
         }
         else{
             responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
