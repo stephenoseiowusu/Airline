@@ -5,6 +5,7 @@ import DTO.models.AirlineAdmin;
 import DTO.models.Credentials;
 import DTO.models.Flight;
 import org.apache.coyote.Response;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +80,22 @@ public class AirlineAdminController {
             responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }else{
             responseEntity = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+        }
+        return responseEntity;
+    }
+    @RequestMapping(value = "/getNumberOfTotalFlights", method = RequestMethod.GET )
+    public ResponseEntity<?> getNumberOfTotalFlights()
+    {
+        ResponseEntity responseEntity;
+        FlightService flightService = new FlightService();
+        int number_of_flights_in_database = flightService.getNumberOfFlightsInDatabase();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("number_of_total_flights",number_of_flights_in_database);
+        if(number_of_flights_in_database != -1){
+            responseEntity = ResponseEntity.ok(jsonObject);
+        }
+        else{
+            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return responseEntity;
     }

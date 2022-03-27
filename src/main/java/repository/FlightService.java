@@ -288,4 +288,22 @@ public class FlightService {
       }
       return number_of_seats_booked;
    }
+   public int getNumberOfFlightsInDatabase(){
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      int number_of_flights_stored = 0;
+      try {
+         session = airlineHibernateDatabase.getSession();
+         Query query = session.createQuery("From Flight");
+         number_of_flights_stored = query.list().size();
+      }catch(Exception e){
+         System.out.println(e.getMessage());
+         number_of_flights_stored = -1;
+      }finally{
+         if(session != null){
+            session.close();
+         }
+      }
+      return number_of_flights_stored;
+   }
 }
