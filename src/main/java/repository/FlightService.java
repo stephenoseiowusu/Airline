@@ -92,8 +92,8 @@ public class FlightService {
          session = airlineHibernateDatabase.getSession();
          hbQuery = session.createQuery(query);
          hbQuery.setParameter("userid",userid);
-         hbQuery.setFirstResult(page * 10);
-         hbQuery.setMaxResults(10);
+         hbQuery.setFirstResult(page * 5);
+         hbQuery.setMaxResults(5);
          List<DAO.models.UserFlights> userFlights = (List<DAO.models.UserFlights>) hbQuery.list();
          for(DAO.models.UserFlights temp: userFlights){
             String query2 = "From Flight f where f.flight_id = :flightId";
