@@ -121,4 +121,18 @@ public class AirlineController {
        }
        return responseEntity;
    }
+   @RequestMapping(method = RequestMethod.GET, value = "/getSeatsBookedForUser")
+    public ResponseEntity<?> getNumberOfSeatsBooked(@RequestParam("userid") int userId, @RequestParam("flightId") int flightId){
+       ResponseEntity<?> responseEntity;
+       FlightService flightService = new FlightService();
+       int number_of_seats_booked = flightService.getNumberOfSeatsUserBookedForFlight(userId,flightId);
+       if(number_of_seats_booked != -1){
+           JSONObject jsonObject = new JSONObject();
+           jsonObject.put("number_of_seats_booked",number_of_seats_booked);
+           responseEntity = ResponseEntity.ok(jsonObject.toString());
+       }else{
+           responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+       }
+       return responseEntity;
+   }
 }

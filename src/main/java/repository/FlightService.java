@@ -269,4 +269,23 @@ public class FlightService {
       }
       return listOfFlights;
    }
+   public int getNumberOfSeatsUserBookedForFlight(int userid, int flightid){
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      int number_of_seats_booked = 0;
+      try {
+         session = airlineHibernateDatabase.getSession();
+         Query query = session.createQuery("From UserFlights where userId = :inUserId and flightId = :inFlightId");
+         DAO.models.UserFlights temp= (DAO.models.UserFlights)query.list().get(0);
+         number_of_seats_booked = temp.getSeatsBooked();
+      }catch(Exception e){
+         System.out.println(e.getMessage());
+         number_of_seats_booked = -1;
+      }finally{
+         if(session != null){
+            session.close();
+         }
+      }
+      return number_of_seats_booked;
+   }
 }
