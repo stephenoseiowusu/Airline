@@ -201,7 +201,7 @@ public class FlightService {
       }
       return result;
    }
-   public ArrayList<Flight> getFlightsWithCriteria(FlightSearch flightSearch){
+   public ArrayList<Flight> getFlightsWithCriteria(FlightSearch flightSearch, int page){
       ArrayList<Flight> listOfFlights = new ArrayList<>();
       Session session = null;
       AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
@@ -209,6 +209,8 @@ public class FlightService {
          session = airlineHibernateDatabase.getSession();
          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
          Query query = session.createQuery("From Flight F where F.origin = :origin and F.destination = :destination");//and F.depart_time between :firstDate and :secondDate");
+         query.setMaxResults(5);
+         query.setFirstResult(page * 5);
          String firstDate = format.format(flightSearch.getFromDate());
          String secondDate = format.format(flightSearch.getToDate());
          query.setParameter("origin",flightSearch.getFromCity());
@@ -233,6 +235,28 @@ public class FlightService {
          System.out.println(e.getMessage());
       }
       return listOfFlights;
+   }
+   public int getCountOfFlightsWithCriteria(FlightSearch flightSearch){
+      int count_of_list_of_flights_With_search_criteria = 0;
+      Session session = null;
+      AirlineHibernateDatabase airlineHibernateDatabase = AirlineHibernateDatabase.getInstance();
+      try{
+         session = airlineHibernateDatabase.getSession();
+         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+         Query query = session.createQuery("From Flight F where F.origin = :origin and F.destination = :destination");//and F.depart_time between :firstDate and :secondDate");
+         String firstDate = format.format(flightSearch.getFromDate());
+         String secondDate = format.format(flightSearch.getToDate());
+         query.setParameter("origin",flightSearch.getFromCity());
+         query.setParameter("destination", flightSearch.getToCity());
+         //query.setParameter("firstDate",flightSearch.getFromDate());
+         //query.setParameter("secondDate",flightSearch.getToDate());
+         count_of_list_of_flights_With_search_criteria = (int)query.stream().count();
+
+      }catch(Exception e){
+         count_of_list_of_flights_With_search_criteria = -1;
+         System.out.println(e.getMessage());
+      }
+      return count_of_list_of_flights_With_search_criteria;
    }
    public ArrayList<Flight> getAllFlightsFromDatabase(){
       ArrayList<Flight> listOfFlights = new ArrayList<>();

@@ -96,10 +96,10 @@ public class AirlineController {
         return responseEntity;
     }
     @RequestMapping(method = RequestMethod.POST, value = "/searchFlights")
-    public ResponseEntity<?> getFlights(@RequestBody FlightSearch flightSearch){
+    public ResponseEntity<?> getFlights(@RequestBody FlightSearch flightSearch, @RequestParam(value = "page",defaultValue = "0") int page){
        ResponseEntity responseEntity;
        FlightService flightService = new FlightService();
-       ArrayList<Flight> flights = flightService.getFlightsWithCriteria(flightSearch);
+       ArrayList<Flight> flights = flightService.getFlightsWithCriteria(flightSearch,page);
        if(flights != null){
            responseEntity = ResponseEntity.ok(flights);
        }else{
@@ -107,6 +107,20 @@ public class AirlineController {
        }
        return responseEntity;
    }
+    @RequestMapping(method = RequestMethod.POST, value = "/countOfListOfFlightsWithSearchCiteria")
+    public ResponseEntity<?> getFlightsCountWithSearchCriteria(@RequestBody FlightSearch flightSearch){
+        ResponseEntity responseEntity;
+        FlightService flightService = new FlightService();
+        int count_of_flights_with_search_criteria = flightService.getCountOfFlightsWithCriteria(flightSearch);
+        if(count_of_flights_with_search_criteria != -1){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("count_of_flights_matching_criteria",count_of_flights_with_search_criteria);
+            responseEntity = ResponseEntity.ok(jsonObject.toString());
+        }else{
+            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return responseEntity;
+    }
    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteFlightForUser")
     public ResponseEntity<?> deleteFlightForUser(@RequestBody UserFlights userFlights){
        ResponseEntity<?> responseEntity;
