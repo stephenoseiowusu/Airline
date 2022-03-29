@@ -115,6 +115,10 @@ public class FlightService {
       }catch(Exception e){
          System.out.println(e.getMessage());
          results = null;
+      }finally {
+         if(session != null){
+            session.close();
+         }
       }
 
       return results;
@@ -255,6 +259,10 @@ public class FlightService {
       }catch(Exception e){
          count_of_list_of_flights_With_search_criteria = -1;
          System.out.println(e.getMessage());
+      }finally{
+         if(session != null){
+            session.close();
+         }
       }
       return count_of_list_of_flights_With_search_criteria;
    }
